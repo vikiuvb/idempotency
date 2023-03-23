@@ -5,7 +5,7 @@
 Network Working Group                                            J. Jena
 Internet-Draft                                                          
 Intended status: Standards Track                                S. Dalal
-Expires: 13 May 2023                                     9 November 2022
+Expires: 24 September 2023                                 23 March 2023
 
 
                  The Idempotency-Key HTTP Header Field
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 May 2023.
+   This Internet-Draft will expire on 24 September 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -258,14 +258,15 @@ Table of Contents
    pointing to relevant documentation.  Following examples shows an
    error response describing the problem using [RFC7807].
 
-HTTP/1.1 400 Bad Request
-Content-Type: application/problem+json
-Content-Language: en
-{
-  "type": "https://developer.example.com/idempotency",
-  "title": "Idempotency-Key is missing",
-  "detail": "This operation is idempotent and it requires correct usage of Idempotency Key.",
-}
+   HTTP/1.1 400 Bad Request
+   Content-Type: application/problem+json
+   Content-Language: en
+   {
+     "type": "https://developer.example.com/idempotency",
+     "title": "Idempotency-Key is missing",
+     "detail": "This operation is idempotent and it requires correct
+      usage of Idempotency Key.",
+   }
 
    Alternately, using the HTTP header Link, the client can be informed
    about the error as shown below.
@@ -280,14 +281,16 @@ Content-Language: en
    documentation.  The status code 422 is defined in Section 11.2 of
    [RFC4918].
 
-HTTP/1.1 422 Unprocessable Entity
-Content-Type: application/problem+json
-Content-Language: en
-{
-  "type": "https://developer.example.com/idempotency",
-  "title": "Idempotency-Key is already used",
-  "detail": "This operation is idempotent and it requires correct usage of Idempotency Key. Idempotency Key MUST not be reused across different payloads of this operation.",
-}
+   HTTP/1.1 422 Unprocessable Entity
+   Content-Type: application/problem+json
+   Content-Language: en
+   {
+     "type": "https://developer.example.com/idempotency",
+     "title": "Idempotency-Key is already used",
+     "detail": "This operation is idempotent and it requires
+     correct usage of Idempotency Key. Idempotency Key MUST not be
+     reused across different payloads of this operation.",
+   }
 
    The server can also inform the client by using the HTTP header Link
    as shown below.
@@ -300,14 +303,15 @@ Content-Language: en
    processed, the resource server SHOULD reply with an HTTP 409 status
    code with body containing problem description.
 
-HTTP/1.1 409 Conflict
-Content-Type: application/problem+json
-Content-Language: en
-{
-  "type": "https://developer.example.com/idempotency",
-  "title": "A request is outstanding for this Idempotency-Key",
-  "detail": "A request with the same Idempotency-Key for the same operation is being processed or is outstanding.",
-}
+   HTTP/1.1 409 Conflict
+   Content-Type: application/problem+json
+   Content-Language: en
+   {
+     "type": "https://developer.example.com/idempotency",
+     "title": "A request is outstanding for this Idempotency-Key",
+     "detail": "A request with the same Idempotency-Key for the
+     same operation is being processed or is outstanding.",
+   }
 
    Or, alternately using the HTTP header Link pointing to the relevant
    documentation
@@ -318,7 +322,7 @@ Content-Language: en
 
    Error scenarios above describe the status of failed idempotent
    requests after the resource server prcocesses them.  Clients MUST
-   correct the requests (with the execption of 409 where no correction
+   correct the requests (with the exception of 409 where no correction
    is required) before performing a retry operation, or the the resource
    server MUST fail the request and return one of the above errors.
 
